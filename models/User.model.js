@@ -10,7 +10,10 @@ const userSchema = new Schema(
             type: String,
             required: [true, "Please enter your email"]
         },
-        password: String,
+        passwordHash: {
+            type: String,
+            required: true
+        },
         platforms: [String],
         games: [String],
         bio: String,

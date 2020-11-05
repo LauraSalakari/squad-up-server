@@ -1,13 +1,15 @@
 require('dotenv').config();
 
-const bodyParser   = require('body-parser');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const express      = require('express');
-const favicon      = require('serve-favicon');
-const hbs          = require('hbs');
-const mongoose     = require('mongoose');
-const logger       = require('morgan');
-const path         = require('path');
+const express = require('express');
+const favicon = require('serve-favicon');
+const hbs = require('hbs');
+const mongoose = require('mongoose');
+const logger = require('morgan');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const path = require('path');
 
 
 const app_name = require('./package.json').name;
@@ -38,7 +40,7 @@ app.use(logger('dev'));
 
 const cors = require('cors')
 app.use(cors({
-  credentials: true, 
+  credentials: true,
   origin: ['http://localhost:3000']
 }))
 
@@ -55,7 +57,7 @@ app.use(cookieParser());
 //   dest: path.join(__dirname, 'public'),
 //   sourceMap: true
 // }));
-      
+
 
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'hbs');
@@ -69,9 +71,12 @@ app.locals.title = 'Squad Up!';
 
 
 // api routes
-app.use((req, res, next) => {
-  res.sendFile(__dirname + "/public/index.html");
-})
+const authRoutes = require("./routes/auth.routes");
+app.use("/api", authRoutes);
+
+// app.use((req, res, next) => {
+//   res.sendFile(__dirname + "/public/index.html");
+// })
 
 
 module.exports = app;
