@@ -104,7 +104,7 @@ router.post("/signin", (req, res) => {
         .then((data) => {
             bcrypt.compare(password, data.passwordHash)
                 .then((match) => {
-                    if(match) {
+                    if (match) {
                         data.passwordHash = "***";
                         req.session.loggedInUser = data;
                         console.log('Signin', req.session)
@@ -114,7 +114,7 @@ router.post("/signin", (req, res) => {
                         res.status(500).json({
                             errorMessage: "Incorrect password"
                         })
-                      return; 
+                        return;
                     }
                 })
                 .catch((err) => {
@@ -131,10 +131,17 @@ router.post("/signin", (req, res) => {
 
 
 // post logout
-
+router.post('/logout', (req, res) => {
+    req.session.destroy();
+    res
+    .status(204)
+    .send();
+})
 
 
 // get user
-
+router.get("/user", isLoggedIn, (req, res, next) => {
+    res.status(200).json(req.session.loggedInUser);
+});
 
 module.exports = router;
