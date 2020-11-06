@@ -74,9 +74,12 @@ app.locals.title = 'Squad Up!';
 const authRoutes = require("./routes/auth.routes");
 app.use("/api", authRoutes);
 
-// app.use((req, res, next) => {
-//   res.sendFile(__dirname + "/public/index.html");
-// })
+const gamesRoutes = require("./routes/games.routes");
+app.use("/api", gamesRoutes);
+
+app.use((req, res, next) => {
+  res.sendFile(__dirname + "/public/index.html");
+})
 
 
 module.exports = app;
