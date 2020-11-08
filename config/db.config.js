@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 let configOptions = {
     useNewUrlParser: true,
-    useUnifiedTopology: true 
+    useUnifiedTopology: true,
+    useFindAndModify: false 
 }
 
 let MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/squad-up-server'

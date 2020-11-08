@@ -77,9 +77,14 @@ app.use("/api", authRoutes);
 const gamesRoutes = require("./routes/games.routes");
 app.use("/api", gamesRoutes);
 
+const uploadRoutes = require("./routes/upload.routes");
+app.use("/api", uploadRoutes);
+
+const userRoutes = require("./routes/user.routes");
+app.use("/api", userRoutes);
+
 app.use((req, res, next) => {
   res.sendFile(__dirname + "/public/index.html");
 })
-
 
 module.exports = app;

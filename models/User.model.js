@@ -14,8 +14,8 @@ const userSchema = new Schema(
             type: String,
             required: true
         },
-        platforms: [String],
-        games: [String],
+        platforms: [Object],
+        games: [Object],
         bio: String,
         image: String
 

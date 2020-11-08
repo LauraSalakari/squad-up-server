@@ -7,7 +7,6 @@ const axios = require("axios")
 router.get("/platforms", (req, res) => {
     axios.get(`https://api.rawg.io/api/platforms/lists/parents`)
     .then((response) => {
-        console.log(response.data.results)
         res.status(200).json(response.data.results);
     })
     .catch(()=> {
