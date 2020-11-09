@@ -83,6 +83,9 @@ app.use("/api", uploadRoutes);
 const userRoutes = require("./routes/user.routes");
 app.use("/api", userRoutes);
 
+const squadRoutes = require("./routes/squad.routes");
+app.use("/api", squadRoutes);
+
 app.use((req, res, next) => {
   res.sendFile(__dirname + "/public/index.html");
 })
