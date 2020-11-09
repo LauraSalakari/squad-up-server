@@ -23,10 +23,7 @@ const squadSchema = new Schema(
             type: Number,
             required: true
         },
-        members: {
-            type: [Schema.Types.ObjectId],
-            ref: "User"
-        }
+        members: [{type: Schema.Types.ObjectId, ref: "User"}] 
     },
     {
         timestamps: true

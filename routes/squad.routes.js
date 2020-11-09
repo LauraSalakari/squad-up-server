@@ -42,7 +42,19 @@ router.patch("/squads/edit/:id", isLoggedIn, (req, res) => {
 
 //get squad/:id - get squad details
 router.get("/squads/:id", isLoggedIn, (req, res) => {
+    let id = req.params.id
 
+    SquadModel.findById(id)
+    .populate("creator")
+    .populate("members")
+    .then((squad) => {
+        res.status(200).json(squad);
+    })
+    .catch((err) => {
+        res.status(500).json({
+            errorMessage: "Failed to fetch squad details"
+        })
+    })
 })
 
 //delete squad - delete a squad
