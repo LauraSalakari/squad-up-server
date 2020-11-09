@@ -8,23 +8,31 @@ const SquadModel = require("../models/Squad.model");
 
 //post squad - create
 router.post("/squads/create", isLoggedIn, (req, res) => {
-    console.log(req.body)
-    res.status(200).json("received")
+    const {title, description, game, maxSize, creator, members} = req.body;
 
-    // SquadModel.create({})
-    // .then((data) => {
-    //     res.status(200).json(data)
-    // })
-    // .catch((err) => {
-    //     res.status(500).json({
-    //         errorMessage: "Failed to create squad"
-    //     })
-    // })
+    SquadModel.create({title, description, game, maxSize, creator, members})
+    .then((data) => {
+        res.status(200).json(data)
+    })
+    .catch((err) => {
+        res.status(500).json({
+            errorMessage: "Failed to create squad"
+        })
+    })
 })
 
 //get squads - get list
 router.get("/squads", isLoggedIn, (req,res) => {
-
+    SquadModel.find()
+    .populate("creator")
+    .then((data) => {
+        res.status(200).json(data)
+    })
+    .catch((err) => {
+        res.status(500).json({
+            errorMessage: "Failed to fetch squads"
+        })
+    })
 })
 
 //patch squad - edit squad details
