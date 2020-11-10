@@ -61,7 +61,41 @@ router.post("/forums/new", isLoggedIn, (req, res) => {
 })
 
 // create a comment - needs second model!
+router.post("/forums/:id/comment", isLoggedIn, (req, res) => {
+    let postId = req.params.id;
+    let {author, content} = req.body;
 
+    CommentModel.create({
+        author: author,
+        content: content,
+        originalPost: postId,
+        upvotes: 0
+    })
+    .then((comment) => {
+        res.status(200).json(comment);
+    })
+    .catch((err) => {
+        res.status(500).json({
+            errorMessage: "Failed to post comment"
+        })
+    })
+})
+
+// get comments
+router.get("/forums/:id/comments", isLoggedIn, (req, res) => {
+    let postId = req.params.id;
+    CommentModel.find({originalPost: postId})
+    .populate("author")
+    .then((comments) => {
+        res.status(200).json(comments);
+    })
+    .catch((err) => {
+        console.log(error);
+        res.status(500).json({
+            errorMessage: "Failed to fetch comments"
+        })
+    })
+})
 
 // edit a post
 

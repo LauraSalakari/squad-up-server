@@ -13,6 +13,11 @@ const commentSchema = new Schema(
         },
         upvotes: {
             type: Number
+        },
+        originalPost: {
+            type: Schema.Types.ObjectId,
+            ref: "Post",
+            required: true
         }
     },
     {
