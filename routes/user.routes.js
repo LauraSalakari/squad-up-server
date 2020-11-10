@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/User.model");
 const { isLoggedIn } = require("../helpers/auth-helper");
-const { response } = require("express");
 const bcrypt = require("bcryptjs");
 
 router.patch("/profile/edit", isLoggedIn, (req, res) => {

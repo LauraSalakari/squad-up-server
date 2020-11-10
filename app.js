@@ -86,6 +86,9 @@ app.use("/api", userRoutes);
 const squadRoutes = require("./routes/squad.routes");
 app.use("/api", squadRoutes);
 
+const forumsRoutes = require("./routes/forums.routes");
+app.use("/api", forumsRoutes);
+ 
 app.use((req, res, next) => {
   res.sendFile(__dirname + "/public/index.html");
 })
