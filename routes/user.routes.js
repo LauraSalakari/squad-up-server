@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/User.model");
+const SquadModel = require("../models/Squad.model")
 const { isLoggedIn } = require("../helpers/auth-helper");
 const bcrypt = require("bcryptjs");
 
@@ -115,6 +116,22 @@ router.get("/profile/:id", isLoggedIn, (req, res) => {
                 errorMessage: "Something went wrong"
             })
         })
+})
+
+// get squads
+router.get("/profile/:id/squads", isLoggedIn, (req,res) => {
+    let id = req.params.id;
+    SquadModel.find({members: id})
+    .populate("creator")
+    .then((squads) => {
+        res.status(200).json(squads);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+            errorMessage: "Failed to fetch user squads"
+        })
+    })
 })
 
 module.exports = router;
