@@ -98,9 +98,34 @@ router.get("/forums/:id/comments", isLoggedIn, (req, res) => {
 })
 
 // edit a post
+router.patch("/forums/:id/edit", isLoggedIn, (req,res) => {
+    let postId = req.params.id;
+    let {title, content} = req.body;
 
+    PostModel.findByIdAndUpdate(postId, {$set: {title: title, content:content}})
+    .then((post) => {
+        res.status(200).json(post);
+    })
+    .catch((err) => {
+        res.status(500).json({
+            errorMessage: "Failed to edit post"
+        })
+    })
+})
 
 // delete a post
+router.delete("/forums/:id/delete", isLoggedIn, (req,res) => {
+    PostModel.findByIdAndDelete(req.params.id)
+    .then((data) => {
+        res.status(200).json(data);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+            errorMessage: "Failed to delete post"
+        })
+    })
+})
 
 
 module.exports = router;
