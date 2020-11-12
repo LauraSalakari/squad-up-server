@@ -44,7 +44,7 @@ router.patch("/squads/:id/join", isLoggedIn, (req, res) => {
     .then((squad) => {
         console.log("here")
         let newMembers = [...squad.members, userId];
-        SquadModel.findByIdAndUpdate(squadId, {$set: {members: newMembers}})
+        SquadModel.findByIdAndUpdate(squadId, {$set: {members: newMembers}}, {new: true})
         .populate("creator")
         .populate("members")
         .then((updated) => {
@@ -62,7 +62,7 @@ router.patch("/squads/:id/leave", isLoggedIn, (req, res) => {
     SquadModel.findById(squadId)
     .then((squad) => {
         let newMembers = squad.members.filter(e => e != userId);
-        SquadModel.findByIdAndUpdate(squadId, {$set: {members: newMembers}})
+        SquadModel.findByIdAndUpdate(squadId, {$set: {members: newMembers}}, {new: true})
         .populate("creator")
         .populate("members")
         .then((updated) => {

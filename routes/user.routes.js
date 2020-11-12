@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/User.model");
-const SquadModel = require("../models/Squad.model")
+const SquadModel = require("../models/Squad.model");
+const MessageModel = require("../models/Message.model");
 const { isLoggedIn } = require("../helpers/auth-helper");
 const bcrypt = require("bcryptjs");
+const { json } = require("express");
 
 router.patch("/profile/edit", isLoggedIn, (req, res) => {
     let id = req.body._id;
@@ -131,6 +133,17 @@ router.get("/profile/:id/squads", isLoggedIn, (req,res) => {
         res.status(500).json({
             errorMessage: "Failed to fetch user squads"
         })
+    })
+})
+
+//get messages
+router.get("/chat/:id", isLoggedIn, (req,res) => {
+    MessageModel.find({room: req.params.id})
+    .then((data) => {
+        res.status(200).json(data);
+    })
+    .catch((err) => {
+        console.log(err);
     })
 })
 
