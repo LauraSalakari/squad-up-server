@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 const http = require('http');
+const socket = require("socket.io");
+const MessageModel = require("../models/Message.model");
 
 let app = require('../app');
 
@@ -41,6 +43,41 @@ server.on('error', error => {
   }
 });
 
-server.listen(process.env.PORT, () => {
+let socketSerrver = server.listen(process.env.PORT, () => {
   console.log(`Listening on http://localhost:${process.env.PORT}`);
 });
+
+// Socket.io stuff
+io = socket(socketSerrver);
+
+io.on("connection", (socket) => {
+  console.log("id", socket.id);
+
+  socket.on("join_room", (data) => {
+    
+    socket.join(data);
+    console.log("User Joined Room: " + data);
+  });
+
+  socket.on("send_message", (data) => {
+    console.log("send data", data);
+    let {room, senderId, senderName, content} = data;
+    MessageModel.create({
+      room,
+      content,
+      senderId,
+      senderName
+    })
+    .then((msg) => {
+      socket.to(data.room).emit("receive_message", msg);
+    })
+  });
+
+  socket.on("disconnect", () => {
+    console.log("USER DISCONNECTED");
+  });
+});
+
+
+
+

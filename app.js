@@ -50,6 +50,7 @@ app.use(cookieParser());
 
 
 
+
 // Express View engine setup
 
 // app.use(require('node-sass-middleware')({
@@ -87,6 +88,7 @@ const squadRoutes = require("./routes/squad.routes");
 app.use("/api", squadRoutes);
 
 const forumsRoutes = require("./routes/forums.routes");
+const { OutgoingMessage } = require('http');
 app.use("/api", forumsRoutes);
  
 app.use((req, res, next) => {
@@ -94,3 +96,4 @@ app.use((req, res, next) => {
 })
 
 module.exports = app;
+ 
