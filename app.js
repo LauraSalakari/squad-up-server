@@ -41,7 +41,7 @@ app.use(logger('dev'));
 const cors = require('cors')
 app.use(cors({
   credentials: true,
-  origin: ["https://squad-u-p.herokuapp.com/"]
+  origin: ["https://squad-u-p.herokuapp.com/", 'http://localhost:3000']
 }))
 
 app.use(bodyParser.json());
